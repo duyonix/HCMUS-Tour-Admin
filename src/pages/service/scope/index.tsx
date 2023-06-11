@@ -1,5 +1,15 @@
 import React, { useState, useEffect } from "react";
-import { Button, Card, Col, Row, Spin, Table, Space, Typography } from "antd";
+import {
+  Button,
+  Card,
+  Col,
+  Row,
+  Spin,
+  Table,
+  Space,
+  Typography,
+  Image
+} from "antd";
 import { DeleteOutlined, EditOutlined, EyeOutlined } from "@ant-design/icons";
 import qs from "query-string";
 import ServiceService from "@/services/service";
@@ -99,6 +109,19 @@ const ServiceScopes = () => {
       title: "Scope Name",
       dataIndex: "name",
       width: 250
+    },
+    {
+      title: "Logo",
+      dataIndex: "logo",
+      render: (data: string) => (
+        <Image
+          className="preview-icon-only"
+          height={60}
+          width={90}
+          src={data}
+        />
+      ),
+      width: 200
     },
     {
       title: "Description",

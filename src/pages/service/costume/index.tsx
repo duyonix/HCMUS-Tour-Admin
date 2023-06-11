@@ -1,5 +1,15 @@
 import React, { useState, useEffect } from "react";
-import { Button, Card, Col, Row, Spin, Table, Space, Typography } from "antd";
+import {
+  Button,
+  Card,
+  Col,
+  Row,
+  Spin,
+  Table,
+  Space,
+  Typography,
+  Image
+} from "antd";
 import { DeleteOutlined, EditOutlined, EyeOutlined } from "@ant-design/icons";
 import qs from "query-string";
 import ServiceService from "@/services/service";
@@ -101,15 +111,28 @@ const ServiceCostumes = () => {
       width: 250
     },
     {
-      title: "Description",
-      dataIndex: "description",
-      width: 400,
-      render: (text: string) => <Text className="text-limit">{text}</Text>
+      title: "Picture",
+      dataIndex: "picture",
+      render: (data: string) => (
+        <Image
+          className="preview-icon-only"
+          height={60}
+          width={90}
+          src={data}
+        />
+      ),
+      width: 200
     },
     {
       title: "Scope",
       dataIndex: ["scope", "name"],
       width: 200
+    },
+    {
+      title: "Description",
+      dataIndex: "description",
+      width: 400,
+      render: (text: string) => <Text className="text-limit">{text}</Text>
     },
     {
       title: "",

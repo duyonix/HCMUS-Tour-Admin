@@ -260,7 +260,7 @@ const ServiceScopeDetail = () => {
                       }
                     ]}
                   >
-                    <InputNumber className="w-100" />
+                    <InputNumber className="w-100 input-number-custom" />
                   </Form.Item>
                 </Col>
                 <Col span={12}>
@@ -274,7 +274,7 @@ const ServiceScopeDetail = () => {
                       }
                     ]}
                   >
-                    <InputNumber className="w-100" />
+                    <InputNumber className="w-100 input-number-custom" />
                   </Form.Item>
                 </Col>
               </Row>
@@ -294,7 +294,7 @@ const ServiceScopeDetail = () => {
                       }
                     ]}
                   >
-                    <InputNumber className="w-100" />
+                    <InputNumber className="w-100 input-number-custom" />
                   </Form.Item>
                 </Col>
                 <Col span={8}>
@@ -308,7 +308,7 @@ const ServiceScopeDetail = () => {
                       }
                     ]}
                   >
-                    <InputNumber className="w-100" />
+                    <InputNumber className="w-100 input-number-custom" />
                   </Form.Item>
                 </Col>
                 <Col span={8}>
@@ -322,7 +322,7 @@ const ServiceScopeDetail = () => {
                       }
                     ]}
                   >
-                    <InputNumber className="w-100" />
+                    <InputNumber className="w-100 input-number-custom" />
                   </Form.Item>
                 </Col>
               </Row>

@@ -90,7 +90,12 @@ const ScopeBackgroundTab = ({ backgrounds, setBackgrounds, auth }: Props) => {
       title: "Image",
       dataIndex: "background",
       render: data => (
-        <Image className="preview-icon-only" height={50} src={data} />
+        <Image
+          className="preview-icon-only"
+          height={60}
+          width={90}
+          src={data}
+        />
       ),
       width: 300
     },
