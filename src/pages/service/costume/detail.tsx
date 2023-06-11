@@ -217,7 +217,7 @@ const ServiceCostumeDetail = () => {
             <Form.Item
               className="mt-2"
               name="scopeId"
-              label="Scope"
+              label="Đối tượng"
               rules={[
                 {
                   required: true,
