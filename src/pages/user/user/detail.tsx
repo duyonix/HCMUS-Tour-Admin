@@ -24,7 +24,7 @@ const UserDetailManagement = () => {
 
   useEffect(() => {
     if (id === "add") {
-      breadcrumb.addBreadcrumb("Add");
+      breadcrumb.addBreadcrumb("Thêm mới");
     } else {
       fetchDetail();
     }
@@ -41,7 +41,7 @@ const UserDetailManagement = () => {
         setAvatars([
           {
             uid: -1,
-            name: "image.jpg",
+            name: "Xem hình ảnh",
             status: "done",
             url: res.payload.avatar
           }
@@ -51,7 +51,7 @@ const UserDetailManagement = () => {
         setModels([
           {
             uid: -1,
-            name: "model.glb",
+            name: "Xem mô hình",
             status: "done",
             url: res.payload.model
           }
@@ -61,9 +61,9 @@ const UserDetailManagement = () => {
     } else {
       switch (res?.status) {
         case variables.NOT_FOUND:
-          return toast.error(messages.NOT_FOUND("user"));
+          return toast.error(messages.NOT_FOUND("người dùng"));
         default:
-          return toast.error(messages.GET_DETAIL_FAILED("user"));
+          return toast.error(messages.GET_DETAIL_FAILED("người dùng"));
       }
     }
   };
@@ -92,7 +92,7 @@ const UserDetailManagement = () => {
 
   const itemsTab = [
     {
-      label: "General Information",
+      label: "Thông tin chung",
       key: "1",
       children: (
         <Row gutter={[64, 16]} className="px-4">
@@ -100,17 +100,17 @@ const UserDetailManagement = () => {
             <Form.Item name="email" label="Email">
               <Input />
             </Form.Item>
-            <Form.Item name="fullName" label="Full name" className="mt-2">
+            <Form.Item name="fullName" label="Họ tên" className="mt-2">
               <Input />
             </Form.Item>
             <Form.Item
               name="mobileNumber"
-              label="Mobile number"
+              label="Số điện thoại"
               className="mt-2"
             >
               <Input />
             </Form.Item>
-            <Form.Item name="role" label="Role" className="mt-2">
+            <Form.Item name="role" label="Phân quyền" className="mt-2">
               <Input />
             </Form.Item>
           </Col>
@@ -119,12 +119,12 @@ const UserDetailManagement = () => {
               <CustomUpload fileList={avatars} setFileList={handleAvatars} />
             </Form.Item>
 
-            <Form.Item name="model" label="Model" className="mt-2">
+            <Form.Item name="model" label="Mô hình" className="mt-2">
               <CustomUpload
                 fileList={models}
                 setFileList={handleModels}
                 accept=".glb"
-                textInfo="(Model must be in .glb format)"
+                textInfo="(Mô hình phải ở định dạng .glb)"
                 type="model"
                 modelScale={4}
                 modelPosition={[0, -4, 0]}
@@ -154,7 +154,7 @@ const UserDetailManagement = () => {
         </Form>
         <Space className="text-right mt-auto btn-action">
           <Button className="button" onClick={onCancel} htmlType="button">
-            Back
+            Quay về
           </Button>
         </Space>
       </Card>

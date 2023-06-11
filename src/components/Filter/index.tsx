@@ -1,10 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { Card, Col, Form, Input, Row, Select, Space, Button } from "antd";
 import { SearchOutlined } from "@ant-design/icons";
 import qs from "query-string";
 import styled from "styled-components";
 import "./style.scss";
-import IconFont from "@/components/IconFont";
 import _ from "lodash";
 import { useHistory, useLocation } from "react-router-dom";
 import { objectToQueryString } from "@/utils";
@@ -53,7 +52,6 @@ const Filter = ({
 }: Props) => {
   const [form] = Form.useForm();
   const location = useLocation();
-  const [isExportLoading, setIsExportLoading] = useState(false);
   const history = useHistory();
   const queryString = qs.parse(location.search);
   const defaultSize = 4;
@@ -94,26 +92,18 @@ const Filter = ({
     form.resetFields();
   };
 
-  const onExport = async () => {
-    setIsExportLoading(true);
-    if (actionExport) {
-      await actionExport();
-    }
-    setIsExportLoading(false);
-  };
-
   const addOptionAll = list => {
     return [
       {
         value: "",
-        label: "All"
+        label: "Tất cả"
       }
     ].concat(list);
   };
 
-  const onChangeFilter = (name, value, node = null) => {
+  const onChangeFilter = (name, value) => {
     if (getValueOnChange) {
-      return getValueOnChange({ name, value, node }, form);
+      return getValueOnChange({ name, value }, form);
     }
     history.push(
       "?" +
@@ -202,26 +192,8 @@ const Filter = ({
                     <StyledSpace className="button-search">
                       {isReset && (
                         <StyledButton htmlType="button" onClick={onReset}>
-                          Reset Filter
+                          Hủy bộ lọc
                         </StyledButton>
-                      )}
-                    </StyledSpace>
-                  </Form.Item>
-                </Col>
-              )}
-              {isExport && (
-                <Col xs={3} xxl={2} className="text-right">
-                  <Form.Item>
-                    <StyledSpace className="button-search">
-                      {isExport && (
-                        <Button
-                          className="button-center button-with-icon"
-                          onClick={onExport}
-                          loading={isExportLoading}
-                        >
-                          <IconFont type="export-file" size="1.571em" />
-                          Export
-                        </Button>
                       )}
                     </StyledSpace>
                   </Form.Item>

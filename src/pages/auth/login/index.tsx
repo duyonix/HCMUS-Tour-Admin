@@ -56,7 +56,7 @@ const Login = () => {
               alt="login-illustrator"
             />
             <Title level={3} style={{ margin: "5vh 0px 3vh 0" }}>
-              Login to HCMUS Tour Dashboard
+              Đăng nhập vào HCMUS Tour Dashboard
             </Title>
             <Form
               style={{ maxWidth: "400px", width: "100%" }}
@@ -68,7 +68,7 @@ const Login = () => {
                 rules={[
                   {
                     required: true,
-                    message: "Please input your email!"
+                    message: "Vui lòng nhập email!"
                   }
                 ]}
               >
@@ -81,12 +81,12 @@ const Login = () => {
                 rules={[
                   {
                     required: true,
-                    message: "Please input your password!"
+                    message: "Vui lòng nhập mật khẩu!"
                   }
                 ]}
               >
                 <Input.Password
-                  placeholder="Password"
+                  placeholder="Mật khẩu"
                   prefix={<KeyOutlined />}
                 />
               </Form.Item>
@@ -97,19 +97,19 @@ const Login = () => {
                 valuePropName="checked"
               >
                 <Switch defaultChecked className="mr-2" />
-                Remember me
+                Nhớ thông tin
               </Form.Item>
 
               <Divider />
               <Form.Item>
                 <Button block type="primary" htmlType="submit">
-                  Login
+                  ĐĂNG NHẬP
                 </Button>
               </Form.Item>
               <p className="font-semibold text-muted mt-1">
-                Don't have an account?{" "}
+                Chưa có tài khoản?{" "}
                 <Link to="/register" className="text-dark font-bold">
-                  Register here
+                  Đăng ký tại đây
                 </Link>
               </p>
             </Form>

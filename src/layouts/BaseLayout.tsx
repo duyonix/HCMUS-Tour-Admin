@@ -10,7 +10,7 @@ import { authActions } from "@/pages/auth/auth.slice";
 import { toast } from "react-toastify";
 import { useAppSelector, useAppDispatch } from "@/hooks";
 import AuthService from "@/services/auth";
-import { useHistory, useParams } from "react-router-dom";
+import { Link, useHistory, useParams } from "react-router-dom";
 import ConfirmModal from "@/components/ConfirmModal";
 import { RootState } from "@/app/store";
 const { Header, Sider, Content } = Layout;
@@ -34,7 +34,7 @@ const BaseLayout = ({ children, routeConfig }: Props) => {
   const onLogout = () => {
     const authService = new AuthService();
     authService.logout().then(() => {
-      toast.success("Logout Success");
+      toast.success("Đăng xuất thành công");
       dispatch(authActions.logoutSuccess());
     });
   };
@@ -56,6 +56,18 @@ const BaseLayout = ({ children, routeConfig }: Props) => {
         {
           key: "1",
           label: (
+            <Link
+              to="/user/profile"
+              className="text-with-icon flex-between color-primary"
+            >
+              <span>Thông tin cá nhân</span>
+              <IconFont className="mr-0" type="staff-card" size="1.571em" />
+            </Link>
+          )
+        },
+        {
+          key: "1",
+          label: (
             <div
               onClick={showConfirm}
               className="text-with-icon flex-between color-primary"
@@ -71,7 +83,7 @@ const BaseLayout = ({ children, routeConfig }: Props) => {
 
   function showConfirm() {
     ConfirmModal({
-      title: "Do you want to logout the page ?",
+      title: "Bạn có chắc muốn đăng xuất khỏi trang?",
       onOk() {
         onLogout();
       }
@@ -127,7 +139,7 @@ const BaseLayout = ({ children, routeConfig }: Props) => {
                       src={srcAvt}
                     />{" "}
                     <span className="pr-1 pl-1">
-                      {auth?.user?.fullName || "Not update"}
+                      {auth?.user?.fullName || "Chưa cập nhật"}
                     </span>
                     <CaretDownOutlined />
                   </div>

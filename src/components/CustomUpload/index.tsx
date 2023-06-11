@@ -10,8 +10,12 @@ const { Text } = Typography;
 type Props = {
   fileList: any;
   setFileList: (fileList: any) => void;
+  folder?: string;
   accept?: string;
+  multiple?: boolean;
+  maxCount?: number;
   textInfo?: string;
+  disabled?: boolean;
   type?: "image" | "model";
   modelWidth?: number;
   modelHeight?: number;
@@ -22,7 +26,11 @@ type Props = {
 const CustomUpload = ({
   fileList,
   setFileList,
+  folder = "picture",
   type = "image",
+  multiple = false,
+  maxCount = 1,
+  disabled = false,
   modelWidth = 600,
   modelHeight = 400,
   modelScale = 8,
@@ -46,34 +54,51 @@ const CustomUpload = ({
 
   const onCustomRequest = async ({ file }) => {
     if (file.size > MAX_FILE_SIZE) {
-      return toast.error("File size must be less than 10MB");
+      return toast.error("Kích thước file không được vượt quá 10MB");
     }
 
-    setFileList([
-      {
-        uid: "-1",
-        name: "file",
-        status: "uploading"
-      }
-    ]);
+    const uid = _.uniqueId();
+
+    const fileStateUpload = {
+      uid,
+      name: "file",
+      status: "uploading"
+    };
+
+    if (!multiple) {
+      setFileList([fileStateUpload]);
+    } else {
+      setFileList(prevFileList => [...prevFileList, fileStateUpload]);
+    }
+
     const res = await commonService.uploadAttachments(file);
     if (res.payload && res.payload.length > 0) {
       let newFile = res.payload[0];
-      setFileList([
-        {
-          uid: _.uniqueId(),
-          name: newFile.fileName,
-          status: "done",
-          url: newFile.url
-        }
-      ]);
+      const data = {
+        uid,
+        name: type === "model" ? "Xem mô hình" : "Xem hình ảnh",
+        status: "done",
+        url: newFile.url
+      };
+
+      if (!multiple) {
+        setFileList([data]);
+      } else {
+        setFileList(prevFileList =>
+          prevFileList.map(item => (item.uid === uid ? data : item))
+        );
+      }
     } else {
-      setFileList([]);
+      setFileList(prevFileList => (multiple ? prevFileList : []));
     }
   };
 
-  const handleRemove = () => {
-    setFileList([]);
+  const handleRemove = file => {
+    if (!multiple) {
+      setFileList([]);
+    } else {
+      setFileList(fileList.filter(item => item.uid !== file.uid));
+    }
   };
 
   const handleCancel = () => {
@@ -101,49 +126,66 @@ const CustomUpload = ({
 
   return (
     <>
-      <Upload
-        listType="picture-card"
-        fileList={fileList}
-        accept={restProps.accept || ".jpg,.jpeg,.png"}
-        customRequest={onCustomRequest}
-        maxCount={1}
-        onRemove={handleRemove}
-        onPreview={handlePreview}
-        {...restProps}
-      >
-        {fileList.length < 2 && uploadButton}
-      </Upload>
-      <Text>
-        {restProps.textInfo ||
-          "(Photo should be less than 10MB and saved as JPG,PNG)"}
-      </Text>
-      <Modal
-        open={previewOpen}
-        title={previewTitle}
-        footer={null}
-        onCancel={handleCancel}
-        width={700}
-      >
-        {type === "image" && (
-          <img alt="example" className="w-100" src={previewImage} />
-        )}
+      {disabled && (fileList == null || fileList.length === 0) ? (
+        <Text>Không có</Text>
+      ) : (
+        <>
+          <Upload
+            listType="picture-card"
+            fileList={fileList}
+            accept={restProps.accept || ".jpg,.jpeg,.png"}
+            customRequest={onCustomRequest}
+            maxCount={multiple ? maxCount : 1}
+            onRemove={handleRemove}
+            onPreview={handlePreview}
+            disabled={disabled}
+            multiple={multiple}
+            {...restProps}
+          >
+            {((!multiple && fileList.length < 2) ||
+              (multiple && fileList.length < maxCount)) &&
+              !disabled &&
+              uploadButton}
+          </Upload>
+          {multiple && (
+            <Text style={{ display: "block" }}>
+              Có thể đăng tải nhiều hình ảnh cùng lúc (Dùng phím Ctrl để chọn)
+            </Text>
+          )}
+          <Text>
+            {restProps.textInfo ||
+              "(Ảnh tối đa 10MB, định dạng JPG, PNG, JPEG)"}
+          </Text>
+          <Modal
+            open={previewOpen}
+            title={previewTitle}
+            footer={null}
+            onCancel={handleCancel}
+            width={700}
+            centered
+          >
+            {type === "image" && (
+              <img alt="example" className="w-100" src={previewImage} />
+            )}
 
-        {type === "model" && (
-          <ModelViewer
-            scale={modelScale}
-            modelPath={previewImage}
-            position={modelPosition}
-            style={{
-              height: modelHeight,
-              width: modelWidth,
-              margin: "0 auto"
-            }}
-            width={modelWidth}
-            height={modelHeight}
-            key={countModel.toString()}
-          />
-        )}
-      </Modal>
+            {type === "model" && (
+              <ModelViewer
+                scale={modelScale}
+                modelPath={previewImage}
+                position={modelPosition}
+                style={{
+                  height: modelHeight,
+                  width: modelWidth,
+                  margin: "0 auto"
+                }}
+                width={modelWidth}
+                height={modelHeight}
+                key={countModel.toString()}
+              />
+            )}
+          </Modal>
+        </>
+      )}
     </>
   );
 };

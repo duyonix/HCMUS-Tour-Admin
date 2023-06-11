@@ -10,7 +10,7 @@ function* getCategoryOptions() {
     yield put(serviceActions.getCategoryOptionsSuccess(res.payload));
   } else {
     yield put(
-      serviceActions.getCategoryOptionsError("Get category options error")
+      serviceActions.getCategoryOptionsError("Lấy danh sách phân loại thất bại")
     );
   }
 }
@@ -21,7 +21,9 @@ function* getScopeOptions() {
   if (res?.status === variables.OK) {
     yield put(serviceActions.getScopeOptionsSuccess(res.payload));
   } else {
-    yield put(serviceActions.getScopeOptionsError("Get scope options error"));
+    yield put(
+      serviceActions.getScopeOptionsError("Lấy danh sách đối tượng thất bại")
+    );
   }
 }
 

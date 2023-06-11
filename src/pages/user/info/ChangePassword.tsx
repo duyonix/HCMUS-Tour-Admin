@@ -34,13 +34,13 @@ const ChangePassword = ({ email, loading, setLoading }: Props) => {
 
   const onFinish = async (values: any) => {
     if (values.newPassword !== values.confirmPassword) {
-      toast.error("New password and confirm password are not the same");
+      toast.error("Mật khẩu mới và xác thực mật khẩu không khớp nhau");
       return;
     }
     setLoading(true);
     const res = await userService.updatePassword(formatData(values));
     if (res.status === variables.OK) {
-      toast.success("Change password successfully! Please login again");
+      toast.success("Đổi mật khẩu thành công! Vui lòng đăng nhập lại");
       authService.logout().then(() => {
         setTimeout(() => {
           dispatch(authActions.logoutSuccess());
@@ -48,7 +48,7 @@ const ChangePassword = ({ email, loading, setLoading }: Props) => {
       });
     } else {
       if (res.status === variables.NOT_MATCH) {
-        toast.error("Old password is not correct");
+        toast.error("Mật khẩu cũ không chính xác");
       } else {
         toast.error(messages.EXCEPTION);
       }
@@ -75,11 +75,11 @@ const ChangePassword = ({ email, loading, setLoading }: Props) => {
           <Form.Item
             className="mt-2"
             name="oldPassword"
-            label="Old password"
+            label="Mật khẩu cũ"
             rules={[
               {
                 required: true,
-                message: "Enter your old password!"
+                message: "Vui lòng nhập mật khẩu cũ!"
               }
             ]}
           >
@@ -88,11 +88,11 @@ const ChangePassword = ({ email, loading, setLoading }: Props) => {
           <Form.Item
             className="mt-2"
             name="newPassword"
-            label="New password"
+            label="Mật khẩu mới"
             rules={[
               {
                 required: true,
-                message: "Enter your new password!"
+                message: "Vui lòng nhập mật khẩu mới!"
               }
             ]}
           >
@@ -101,11 +101,11 @@ const ChangePassword = ({ email, loading, setLoading }: Props) => {
           <Form.Item
             className="mt-2"
             name="confirmPassword"
-            label="Confirm password"
+            label="Xác thực mật khẩu mới"
             rules={[
               {
                 required: true,
-                message: "Re-enter your new password!"
+                message: "Vui lòng xác thực mật khẩu mới!"
               }
             ]}
           >
@@ -120,7 +120,7 @@ const ChangePassword = ({ email, loading, setLoading }: Props) => {
           htmlType="submit"
           onClick={() => form.submit()}
         >
-          Update Password
+          Thay đổi mật khẩu
         </Button>
       </>
     </Row>

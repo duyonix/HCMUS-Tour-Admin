@@ -9,7 +9,7 @@ type Props = {
 };
 
 const ReadyPlayerMe = ({ showIFrame, setShowIFrame, setModel }: Props) => {
-  const subdomain = "thesis";
+  const subdomain = process.env.READY_PLAYER_ME_SUBDOMAIN;
   const iFrameRef = useRef(null);
 
   useEffect(() => {
@@ -31,7 +31,6 @@ const ReadyPlayerMe = ({ showIFrame, setShowIFrame, setModel }: Props) => {
 
   const subscribe = event => {
     const json = parse(event.data);
-
     if (json?.source !== "readyplayerme") {
       return;
     }
@@ -56,16 +55,11 @@ const ReadyPlayerMe = ({ showIFrame, setShowIFrame, setModel }: Props) => {
       setShowIFrame(false);
       setModel(json.data.url);
     }
-
-    // Get user id
-    // if (json.eventName === "v1.user.set") {
-    //   console.log(`User with id ${json.data.id} set: ${JSON.stringify(json)}`);
-    // }
   };
 
   return (
     <Modal
-      title="Change Avatar Model"
+      title="Đổi Mô hình 3D Avatar"
       open={showIFrame}
       footer={null}
       onCancel={() => setShowIFrame(false)}

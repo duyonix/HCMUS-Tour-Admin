@@ -30,7 +30,7 @@ function* getInfo(action: any) {
   if (res?.status === variables.OK) {
     yield put(authActions.getInfoSuccess(res.payload));
   } else {
-    yield put(authActions.getInfoError({ message: "Get info error" }));
+    yield put(authActions.getInfoError({ message: "Lấy thông tin thất bại" }));
   }
 }
 

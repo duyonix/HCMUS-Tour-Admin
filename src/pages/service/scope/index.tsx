@@ -68,7 +68,7 @@ const ServiceScopes = () => {
     setIsDeleteLoading(false);
 
     if (res.status === variables.OK) {
-      toast.success(messages.DELETE_SUCCESS("scope"));
+      toast.success(messages.DELETE_SUCCESS("đối tượng"));
       if (index === total && index !== 1 && index % size === 1) {
         history.push(
           "?" +
@@ -83,16 +83,16 @@ const ServiceScopes = () => {
     } else {
       switch (res?.status) {
         case variables.ALREADY_USED_ELSEWHERE:
-          return toast.error(messages.ALREADY_USED_ELSEWHERE("scope"));
+          return toast.error(messages.ALREADY_USED_ELSEWHERE("đối tượng"));
         default:
-          return toast.error(messages.DELETE_FAILED("scope"));
+          return toast.error(messages.DELETE_FAILED("đối tượng"));
       }
     }
   };
 
   const onConfirmRemove = (id: number, index: number) => {
     ConfirmModal({
-      title: messages.CONFIRM_DELETE("scope"),
+      title: messages.CONFIRM_DELETE("đối tượng"),
       onOk() {
         onDelete(id, index);
       }
@@ -101,12 +101,12 @@ const ServiceScopes = () => {
 
   const columns = [
     {
-      title: "No.",
+      title: "STT",
       render: (_: any, __: any, index: number) => page * size + index + 1,
       width: 100
     },
     {
-      title: "Scope Name",
+      title: "Tên đối tượng",
       dataIndex: "name",
       width: 250
     },
@@ -124,22 +124,15 @@ const ServiceScopes = () => {
       width: 200
     },
     {
-      title: "Description",
-      dataIndex: "description",
-      width: 400,
-      render: (text: string) => <Text className="text-limit">{text}</Text>
-    },
-    {
-      title: "Category",
+      title: "Phân loại",
       dataIndex: ["category", "name"],
       width: 200
     },
     {
-      title: "Number of Costumes",
-      dataIndex: "costumes",
-      width: 200,
-      align: "center",
-      render: (costumes: any[]) => costumes.length
+      title: "Mô tả",
+      dataIndex: "description",
+      width: 400,
+      render: (text: string) => <Text className="text-limit">{text}</Text>
     },
     {
       title: "",
@@ -167,22 +160,22 @@ const ServiceScopes = () => {
       <Filter
         filterSelects={[
           {
-            label: "Category",
+            label: "Phân loại",
             name: "categoryId",
             options: mappingOptions(categoryOptions.data, "id", "name")
           }
         ]}
         isReset
-        placeholder="Search by Name"
+        placeholder="Tìm kiếm theo tên đối tượng"
         isSearch
         nameSearch="search"
       />
       <Card className="m-2 radius-lg">
         <Row className="mb-2" justify="space-between">
-          <Col className="d-flex al-center">Total: {total}</Col>
+          <Col className="d-flex al-center">Tổng cộng: {total} đối tượng</Col>
           {auth.role === "ADMIN" && (
             <Button type="primary" onClick={onAdd}>
-              Add
+              Thêm mới
             </Button>
           )}
         </Row>
@@ -204,7 +197,11 @@ const ServiceScopes = () => {
               }}
             ></Table>
           ) : (
-            !loading && <div className="text-center m-4">No scopes found</div>
+            !loading && (
+              <div className="text-center m-4">
+                Không có đối tượng nào được tìm thấy
+              </div>
+            )
           )}
         </Spin>
       </Card>

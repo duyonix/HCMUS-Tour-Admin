@@ -28,7 +28,7 @@ const ServiceCategoryDetail = () => {
 
   useEffect(() => {
     if (id === "add") {
-      breadcrumb.addBreadcrumb("Add");
+      breadcrumb.addBreadcrumb("Thêm mới");
     } else {
       fetchDetail();
     }
@@ -45,7 +45,7 @@ const ServiceCategoryDetail = () => {
         setBackgrounds([
           {
             uid: -1,
-            name: "image.jpg",
+            name: "Xem hình ảnh",
             status: "done",
             url: res.payload.background
           }
@@ -55,9 +55,9 @@ const ServiceCategoryDetail = () => {
     } else {
       switch (res?.status) {
         case variables.NOT_FOUND:
-          return toast.error(messages.NOT_FOUND("category"));
+          return toast.error(messages.NOT_FOUND("phân loại"));
         default:
-          return toast.error(messages.GET_DETAIL_FAILED("category"));
+          return toast.error(messages.GET_DETAIL_FAILED("phân loại"));
       }
     }
   };
@@ -67,14 +67,14 @@ const ServiceCategoryDetail = () => {
     const res = await serviceService.category.addCategory(data);
     setLoading(false);
     if (res.status === variables.OK) {
-      toast.success(messages.CREATE_SUCCESS("category"));
+      toast.success(messages.CREATE_SUCCESS("phân loại"));
       history.push("/service/categories");
     } else {
       switch (res?.status) {
         case variables.DUPLICATE_ENTITY:
-          return toast.error(messages.EXISTED("Category name"));
+          return toast.error(messages.EXISTED("Tên phân loại"));
         default:
-          return toast.error(messages.CREATE_FAILED("category"));
+          return toast.error(messages.CREATE_FAILED("phân loại"));
       }
     }
   };
@@ -84,15 +84,15 @@ const ServiceCategoryDetail = () => {
     const res = await serviceService.category.updateCategory(id, data);
     setLoading(false);
     if (res.status === variables.OK) {
-      toast.success(messages.EDIT_SUCCESS("category"));
+      toast.success(messages.EDIT_SUCCESS("phân loại"));
       breadcrumb.addBreadcrumb(data.name);
       setIsChange(false);
     } else {
       switch (res?.status) {
         case variables.DUPLICATE_ENTITY:
-          return toast.error(messages.EXISTED("Category name"));
+          return toast.error(messages.EXISTED("Tên phân loại"));
         default:
-          return toast.error(messages.EDIT_FAILED("category"));
+          return toast.error(messages.EDIT_FAILED("phân loại"));
       }
     }
   };
@@ -107,7 +107,7 @@ const ServiceCategoryDetail = () => {
 
   const onSave = data => {
     if (backgrounds.length === 0) {
-      return toast.error("Background is required");
+      return toast.error("Vui lòng thêm ảnh nền");
     }
     const newData = convertData(data);
     if (id === "add") {
@@ -136,35 +136,35 @@ const ServiceCategoryDetail = () => {
 
   const itemsTab = [
     {
-      label: "General Information",
+      label: "Thông tin chung",
       key: "1",
       children: (
         <Row gutter={[64, 16]} className="px-4">
           <Col span={12}>
             <Form.Item
               name="name"
-              label="Category Name"
+              label="Tên phân loại"
               rules={[
                 {
                   required: true,
-                  message: "Category Name is required"
+                  message: "Tên phân loại là bắt buộc"
                 }
               ]}
             >
               <Input />
             </Form.Item>
-            <Form.Item name="description" label="Description" className="mt-2">
+            <Form.Item name="description" label="Mô tả" className="mt-2">
               <TextArea rows={5} />
             </Form.Item>
           </Col>
           <Col span={12}>
             <Form.Item
               name="background"
-              label="Background"
+              label="Hình nền"
               rules={[
                 {
                   required: true,
-                  message: "Background is required"
+                  message: "Hình nền là bắt buộc"
                 }
               ]}
             >
@@ -197,7 +197,7 @@ const ServiceCategoryDetail = () => {
         </Form>
         <Space className="text-right mt-auto btn-action">
           <Button className="button" onClick={onCancel} htmlType="button">
-            Back
+            Quay về
           </Button>
           {auth.role === "ADMIN" && (
             <Button
@@ -207,7 +207,7 @@ const ServiceCategoryDetail = () => {
               htmlType="submit"
               onClick={() => form.submit()}
             >
-              Save
+              Lưu
             </Button>
           )}
         </Space>

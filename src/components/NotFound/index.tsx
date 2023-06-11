@@ -11,7 +11,7 @@ const NotFound = () => {
       subTitle={messages.PAGE_NOT_FOUND}
       extra={
         <Link to="/">
-          <Button type="primary">Back Home</Button>
+          <Button type="primary">Về Trang chủ</Button>
         </Link>
       }
     />

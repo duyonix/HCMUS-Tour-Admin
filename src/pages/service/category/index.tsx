@@ -53,7 +53,7 @@ const ServiceCategories = () => {
     const res = await serviceService.category.deleteCategory(id.toString());
     setIsDeleteLoading(false);
     if (res.status === variables.OK) {
-      toast.success(messages.DELETE_SUCCESS("category"));
+      toast.success(messages.DELETE_SUCCESS("phân loại"));
       if (index === total && index !== 1 && index % size === 1) {
         history.push(
           "?" +
@@ -68,16 +68,16 @@ const ServiceCategories = () => {
     } else {
       switch (res?.status) {
         case variables.ALREADY_USED_ELSEWHERE:
-          return toast.error(messages.ALREADY_USED_ELSEWHERE("category"));
+          return toast.error(messages.ALREADY_USED_ELSEWHERE("phân loại"));
         default:
-          return toast.error(messages.DELETE_FAILED("category"));
+          return toast.error(messages.DELETE_FAILED("phân loại"));
       }
     }
   };
 
   const onConfirmRemove = (id: number, index: number) => {
     ConfirmModal({
-      title: messages.CONFIRM_DELETE("category"),
+      title: messages.CONFIRM_DELETE("phân loại"),
       onOk() {
         onDelete(id, index);
       }
@@ -86,17 +86,17 @@ const ServiceCategories = () => {
 
   const columns = [
     {
-      title: "No.",
+      title: "STT",
       render: (_: any, __: any, index: number) => page * size + index + 1,
       width: 100
     },
     {
-      title: "Category Name",
+      title: "Tên phân loại",
       dataIndex: "name",
       width: 250
     },
     {
-      title: "Background",
+      title: "Hình nền",
       dataIndex: "background",
       render: (data: string) => (
         <Image
@@ -109,7 +109,7 @@ const ServiceCategories = () => {
       width: 200
     },
     {
-      title: "Description",
+      title: "Mô tả",
       dataIndex: "description",
       width: 400,
       render: (text: string) => <Text className="text-limit">{text}</Text>
@@ -139,16 +139,16 @@ const ServiceCategories = () => {
     <>
       <Filter
         isReset
-        placeholder="Search by Name"
+        placeholder="Tìm kiếm theo tên phân loại"
         isSearch
         nameSearch="search"
       />
       <Card className="m-2 radius-lg">
         <Row className="mb-2" justify="space-between">
-          <Col className="d-flex al-center">Total: {total}</Col>
+          <Col className="d-flex al-center">Tổng cộng: {total} phân loại</Col>
           {auth.role === "ADMIN" && (
             <Button type="primary" onClick={onAdd}>
-              Add
+              Thêm mới
             </Button>
           )}
         </Row>
@@ -171,7 +171,9 @@ const ServiceCategories = () => {
             ></Table>
           ) : (
             !loading && (
-              <div className="text-center m-4">No categories found</div>
+              <div className="text-center m-4">
+                Không phân loại nào được tìm thấy
+              </div>
             )
           )}
         </Spin>

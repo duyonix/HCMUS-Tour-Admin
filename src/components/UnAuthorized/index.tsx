@@ -11,7 +11,7 @@ const UnAuthorized = () => {
       subTitle={messages.TITLE_PERMISSION_DENIED}
       extra={
         <Link to="/">
-          <Button type="primary">Back Home</Button>
+          <Button type="primary">Về trang chủ</Button>
         </Link>
       }
     />

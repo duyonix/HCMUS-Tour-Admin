@@ -83,16 +83,16 @@ const ServiceCostumes = () => {
     } else {
       switch (res?.status) {
         case variables.ALREADY_USED_ELSEWHERE:
-          return toast.error(messages.ALREADY_USED_ELSEWHERE("costume"));
+          return toast.error(messages.ALREADY_USED_ELSEWHERE("đồng phục"));
         default:
-          return toast.error(messages.DELETE_FAILED("costume"));
+          return toast.error(messages.DELETE_FAILED("đồng phục"));
       }
     }
   };
 
   const onConfirmRemove = (id: number, index: number) => {
     ConfirmModal({
-      title: messages.CONFIRM_DELETE("costume"),
+      title: messages.CONFIRM_DELETE("đồng phục"),
       onOk() {
         onDelete(id, index);
       }
@@ -101,17 +101,17 @@ const ServiceCostumes = () => {
 
   const columns = [
     {
-      title: "No.",
+      title: "STT",
       render: (_: any, __: any, index: number) => page * size + index + 1,
       width: 100
     },
     {
-      title: "Costume Name",
+      title: "Tên đồng phục",
       dataIndex: "name",
       width: 250
     },
     {
-      title: "Picture",
+      title: "Hình ảnh",
       dataIndex: "picture",
       render: (data: string) => (
         <Image
@@ -124,12 +124,12 @@ const ServiceCostumes = () => {
       width: 200
     },
     {
-      title: "Scope",
+      title: "Đối tượng",
       dataIndex: ["scope", "name"],
       width: 200
     },
     {
-      title: "Description",
+      title: "Mô tả",
       dataIndex: "description",
       width: 400,
       render: (text: string) => <Text className="text-limit">{text}</Text>
@@ -160,22 +160,22 @@ const ServiceCostumes = () => {
       <Filter
         filterSelects={[
           {
-            label: "Scope",
+            label: "Đối tượng",
             name: "scopeId",
             options: mappingOptions(scopeOptions.data, "id", "name")
           }
         ]}
         isReset
-        placeholder="Search by Name"
+        placeholder="Tìm kiếm theo tên đồng phục"
         isSearch
         nameSearch="search"
       />
       <Card className="m-2 radius-lg">
         <Row className="mb-2" justify="space-between">
-          <Col className="d-flex al-center">Total: {total}</Col>
+          <Col className="d-flex al-center">Tổng cộng: {total} đồng phục</Col>
           {auth.role === "ADMIN" && (
             <Button type="primary" onClick={onAdd}>
-              Add
+              Thêm mới
             </Button>
           )}
         </Row>
@@ -197,7 +197,11 @@ const ServiceCostumes = () => {
               }}
             ></Table>
           ) : (
-            !loading && <div className="text-center m-4">No costumes found</div>
+            !loading && (
+              <div className="text-center m-4">
+                Không đồng phục nào được tìm thấy
+              </div>
+            )
           )}
         </Spin>
       </Card>

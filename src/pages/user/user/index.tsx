@@ -28,7 +28,7 @@ const UsersManagement = () => {
 
   const columns = [
     {
-      title: "No.",
+      title: "STT",
       render: (_: any, __: any, index: number) => page * size + index + 1,
       width: 100
     },
@@ -38,12 +38,12 @@ const UsersManagement = () => {
       width: 250
     },
     {
-      title: "Full Name",
+      title: "Họ tên",
       dataIndex: "fullName",
       width: 250
     },
     {
-      title: "Role",
+      title: "Phân quyền",
       dataIndex: "role",
       align: "center",
       render: data => (
@@ -68,13 +68,13 @@ const UsersManagement = () => {
     <>
       <Filter
         isReset
-        placeholder="Search by Name"
+        placeholder="Tìm kiếm theo email"
         isSearch
         nameSearch="search"
       />
       <Card className="m-2 radius-lg">
         <Row className="mb-2" justify="space-between">
-          <Col className="d-flex al-center">Total: {total}</Col>
+          <Col className="d-flex al-center">Tổng cộng: {total} người dùng</Col>
         </Row>
         <Spin size="large" spinning={loading}>
           {list.length > 0 ? (
@@ -94,7 +94,11 @@ const UsersManagement = () => {
               }}
             ></Table>
           ) : (
-            !loading && <div className="text-center m-4">No users found</div>
+            !loading && (
+              <div className="text-center m-4">
+                Không người dùng nào được tìm thấy
+              </div>
+            )
           )}
         </Spin>
       </Card>

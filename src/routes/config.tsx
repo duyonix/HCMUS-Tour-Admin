@@ -49,12 +49,12 @@ export const publicRoutes: Route[] = [
 export const privateRoutes: MultiRoute[] = [
   {
     path: "/service",
-    title: "Service",
+    title: "Thông tin",
     icon: <IconFont type="workplace" />,
     redirect: "/service/categories",
     subMenu: [
       {
-        title: "Categories",
+        title: "Phân loại",
         path: "/service/categories",
         route: [
           {
@@ -68,7 +68,7 @@ export const privateRoutes: MultiRoute[] = [
         ]
       },
       {
-        title: "Scopes",
+        title: "Đối tượng",
         path: "/service/scopes",
         route: [
           {
@@ -82,7 +82,7 @@ export const privateRoutes: MultiRoute[] = [
         ]
       },
       {
-        title: "Costumes",
+        title: "Đồng phục",
         path: "/service/costumes",
         route: [
           {
@@ -99,12 +99,12 @@ export const privateRoutes: MultiRoute[] = [
   },
   {
     path: "/user",
-    title: "User",
+    title: "Người dùng",
     icon: <IconFont type="staff-card" />,
     redirect: "/user/profile",
     subMenu: [
       {
-        title: "Users",
+        title: "Quản lý người dùng",
         path: "/user/users",
         role: "ADMIN",
         route: [
@@ -121,7 +121,7 @@ export const privateRoutes: MultiRoute[] = [
         ]
       },
       {
-        title: "Profile",
+        title: "Thông tin cá nhân",
         path: "/user/profile",
         route: [
           {

@@ -15,8 +15,8 @@ type Props = {
 const ConfirmModal = ({
   title,
   icon = <QuestionCircleOutlined />,
-  okText = "Yes",
-  cancelText = "No",
+  okText = "Có",
+  cancelText = "Không",
   onOk,
   onCancel = () => {}
 }: Props) => {

@@ -51,7 +51,7 @@ const UserProfile = () => {
         setAvatars([
           {
             uid: -1,
-            name: "image.jpg",
+            name: "Xem hình ảnh",
             status: "done",
             url: res.payload.avatar
           }
@@ -60,9 +60,9 @@ const UserProfile = () => {
     } else {
       switch (res?.status) {
         case variables.NOT_FOUND:
-          return toast.error(messages.NOT_FOUND("user"));
+          return toast.error(messages.NOT_FOUND("người dùng"));
         default:
-          return toast.error(messages.GET_DETAIL_FAILED("user"));
+          return toast.error(messages.GET_DETAIL_FAILED("người dùng"));
       }
     }
   };
@@ -81,10 +81,10 @@ const UserProfile = () => {
     const res = await userService.updateProfile(convertData(data));
     setLoading(false);
     if (res.status === variables.OK) {
-      toast.success("Update profile successfully!");
+      toast.success("Cập nhật thông tin cá nhân thành công!");
       setIsChange(false);
     } else {
-      toast.error("Update profile failed!");
+      toast.error("Cập nhật thông tin cá nhân thất bại!");
     }
   };
 
@@ -100,7 +100,7 @@ const UserProfile = () => {
 
   const itemsTab = [
     {
-      label: "General Information",
+      label: "Thông tin chung",
       key: "1",
       children: (
         <>
@@ -122,7 +122,7 @@ const UserProfile = () => {
                   rules={[
                     {
                       required: true,
-                      message: "Please input your email!"
+                      message: "Vui lòng nhập email!"
                     }
                   ]}
                 >
@@ -132,37 +132,37 @@ const UserProfile = () => {
                   <Col md={12}>
                     <Form.Item
                       className="mt-2"
-                      name="firstName"
-                      label="First name"
+                      name="lastName"
+                      label="Họ"
                       rules={[
                         {
                           required: true,
-                          message: "Input your first name!"
+                          message: "Vui lòng nhập họ!"
                         }
                       ]}
                     >
-                      <Input placeholder="First name" />
+                      <Input placeholder="Họ" />
                     </Form.Item>
                   </Col>
                   <Col md={12}>
                     <Form.Item
                       className="mt-2"
-                      name="lastName"
-                      label="Last name"
+                      name="firstName"
+                      label="Tên"
                       rules={[
                         {
                           required: true,
-                          message: "Input your last name!"
+                          message: "Vui lòng nhập tên!"
                         }
                       ]}
                     >
-                      <Input placeholder="Last name" />
+                      <Input placeholder="Tên" />
                     </Form.Item>
                   </Col>
                 </Row>
                 <Form.Item
                   name="mobileNumber"
-                  label="Mobile number"
+                  label="Số điện thoại"
                   className="mt-2"
                 >
                   <Input />
@@ -180,7 +180,7 @@ const UserProfile = () => {
                     fontWeight: "600"
                   }}
                 >
-                  Model
+                  Mô hình
                 </Text>
                 {model && (
                   <div
@@ -215,7 +215,7 @@ const UserProfile = () => {
                     type="primary"
                     onClick={() => setShowIFrame(true)}
                   >
-                    {model ? "Update Avatar Model" : "Create Avatar Model"}
+                    {model ? "Cập nhật mô hình Avatar" : "Tạo mô hình Avatar"}
                   </Button>
                 </div>
                 <ReadyPlayerMe
@@ -240,14 +240,14 @@ const UserProfile = () => {
               htmlType="submit"
               onClick={() => form.submit()}
             >
-              Save
+              Lưu
             </Button>
           </Space>
         </>
       )
     },
     {
-      label: "Change Password",
+      label: "Đổi mật khẩu",
       key: "2",
       children: (
         <ChangePassword

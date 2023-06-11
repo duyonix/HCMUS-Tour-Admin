@@ -56,7 +56,7 @@ const ServiceScopeDetail = () => {
 
   useEffect(() => {
     if (id === "add") {
-      breadcrumb.addBreadcrumb("Add");
+      breadcrumb.addBreadcrumb("Thêm mới");
     } else {
       fetchDetail();
     }
@@ -83,7 +83,7 @@ const ServiceScopeDetail = () => {
         setLogos([
           {
             uid: -1,
-            name: "image.jpg",
+            name: "Xem hình ảnh",
             status: "done",
             url: res.payload.logo
           }
@@ -99,9 +99,9 @@ const ServiceScopeDetail = () => {
     } else {
       switch (res?.status) {
         case variables.NOT_FOUND:
-          return toast.error(messages.NOT_FOUND("scope"));
+          return toast.error(messages.NOT_FOUND("đối tượng"));
         default:
-          return toast.error(messages.GET_DETAIL_FAILED("scope"));
+          return toast.error(messages.GET_DETAIL_FAILED("đối tượng"));
       }
     }
   };
@@ -111,14 +111,14 @@ const ServiceScopeDetail = () => {
     const res = await serviceService.scope.addScope(data);
     setLoading(false);
     if (res.status === variables.OK) {
-      toast.success(messages.CREATE_SUCCESS("scope"));
+      toast.success(messages.CREATE_SUCCESS("đối tượng"));
       history.push("/service/scopes");
     } else {
       switch (res?.status) {
         case variables.DUPLICATE_ENTITY:
-          return toast.error(messages.EXISTED("Scope name"));
+          return toast.error(messages.EXISTED("Tên đối tượng"));
         default:
-          return toast.error(messages.CREATE_FAILED("scope"));
+          return toast.error(messages.CREATE_FAILED("đối tượng"));
       }
     }
   };
@@ -128,15 +128,15 @@ const ServiceScopeDetail = () => {
     const res = await serviceService.scope.updateScope(id, data);
     setLoading(false);
     if (res.status === variables.OK) {
-      toast.success(messages.EDIT_SUCCESS("scope"));
+      toast.success(messages.EDIT_SUCCESS("đối tượng"));
       breadcrumb.addBreadcrumb(data.name);
       setIsChange(false);
     } else {
       switch (res?.status) {
         case variables.DUPLICATE_ENTITY:
-          return toast.error(messages.EXISTED("Scope name"));
+          return toast.error(messages.EXISTED("Tên đối tượng"));
         default:
-          return toast.error(messages.EDIT_FAILED("scope"));
+          return toast.error(messages.EDIT_FAILED("đối tượng"));
       }
     }
   };
@@ -153,10 +153,10 @@ const ServiceScopeDetail = () => {
 
   const onSave = data => {
     if (logos.length === 0) {
-      return toast.error("Please upload a logo image");
+      return toast.error("Hình ảnh logo là bắt buộc");
     }
     if (backgrounds.length === 0) {
-      return toast.error("Please upload at least 1 background image");
+      return toast.error("Vui lòng thêm ít nhất một hình ảnh nền");
     }
 
     const newData = convertData(data);
@@ -191,18 +191,18 @@ const ServiceScopeDetail = () => {
 
   const itemsTab = [
     {
-      label: "General Information",
+      label: "Thông tin chung",
       key: "1",
       children: (
         <Row gutter={[64, 16]} className="px-4">
           <Col span={12}>
             <Form.Item
               name="name"
-              label="Scope Name"
+              label="Tên đối tượng"
               rules={[
                 {
                   required: true,
-                  message: "Scope Name is required"
+                  message: "Tên đối tượng là bắt buộc"
                 }
               ]}
             >
@@ -211,24 +211,23 @@ const ServiceScopeDetail = () => {
             <Form.Item
               className="mt-2"
               name="categoryId"
-              label="Category"
+              label="Phân loại"
               rules={[
                 {
                   required: true,
-                  message: "Category is required"
+                  message: "Phân loại là bắt buộc"
                 }
               ]}
             >
               <Select
-                placeholder="Select Category"
+                placeholder="Chọn phân loại"
                 optionFilterProp="label"
                 className="w-100"
                 options={allCategoryOptions}
-                showSearch
               />
             </Form.Item>
 
-            <Form.Item name="description" label="Description" className="mt-2">
+            <Form.Item name="description" label="Mô tả" className="mt-2">
               <TextArea rows={5} />
             </Form.Item>
           </Col>
@@ -239,7 +238,7 @@ const ServiceScopeDetail = () => {
               rules={[
                 {
                   required: true,
-                  message: "Logo is required"
+                  message: "Logo là bắt buộc"
                 }
               ]}
             >
@@ -247,7 +246,7 @@ const ServiceScopeDetail = () => {
             </Form.Item>
 
             <div className="mt-4">
-              <Text strong>2D Coordinate (For Minimap)</Text>
+              <Text strong>Tọa độ 2D (Cho bản đồ thu nhỏ)</Text>
               <Row gutter={[16, 16]}>
                 <Col span={12}>
                   <Form.Item
@@ -256,7 +255,7 @@ const ServiceScopeDetail = () => {
                     rules={[
                       {
                         required: true,
-                        message: "2D Coordinate X is required"
+                        message: "Tọa độ 2D X là bắt buộc"
                       }
                     ]}
                   >
@@ -270,7 +269,7 @@ const ServiceScopeDetail = () => {
                     rules={[
                       {
                         required: true,
-                        message: "2D Coordinate Y is required"
+                        message: "Tọa độ 2D Y là bắt buộc"
                       }
                     ]}
                   >
@@ -281,7 +280,7 @@ const ServiceScopeDetail = () => {
             </div>
 
             <div className="mt-4">
-              <Text strong>3D Coordinate (For Real World Map)</Text>
+              <Text strong>Tọa độ 3D (Cho bản đồ trường đại học)</Text>
               <Row gutter={[16, 16]}>
                 <Col span={8}>
                   <Form.Item
@@ -290,7 +289,7 @@ const ServiceScopeDetail = () => {
                     rules={[
                       {
                         required: true,
-                        message: "3D Coordinate X is required"
+                        message: "Tọa độ 3D X là bắt buộc"
                       }
                     ]}
                   >
@@ -304,7 +303,7 @@ const ServiceScopeDetail = () => {
                     rules={[
                       {
                         required: true,
-                        message: "3D Coordinate Y is required"
+                        message: "Tọa độ 3D Y là bắt buộc"
                       }
                     ]}
                   >
@@ -318,7 +317,7 @@ const ServiceScopeDetail = () => {
                     rules={[
                       {
                         required: true,
-                        message: "3D Coordinate Z is required"
+                        message: "Tọa độ 3D Z là bắt buộc"
                       }
                     ]}
                   >
@@ -332,7 +331,7 @@ const ServiceScopeDetail = () => {
       )
     },
     {
-      label: "Backgrounds",
+      label: "Hình nền",
       key: "2",
       children: (
         <ScopeBackgroundTab
@@ -362,7 +361,7 @@ const ServiceScopeDetail = () => {
         </Form>
         <Space className="text-right mt-auto btn-action">
           <Button className="button" onClick={onCancel} htmlType="button">
-            Back
+            Quay về
           </Button>
           {auth.role === "ADMIN" && (
             <Button
@@ -372,7 +371,7 @@ const ServiceScopeDetail = () => {
               htmlType="submit"
               onClick={() => form.submit()}
             >
-              Save
+              Lưu
             </Button>
           )}
         </Space>
