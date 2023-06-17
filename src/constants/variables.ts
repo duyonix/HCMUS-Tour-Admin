@@ -8,4 +8,15 @@ const variables = {
   EXCEPTION: "EXCEPTION"
 };
 
+export const ROLE_OPTIONS = [
+  {
+    value: "ADMIN",
+    label: "ADMIN"
+  },
+  {
+    value: "USER",
+    label: "USER"
+  }
+];
+
 export default variables;

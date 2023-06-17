@@ -249,7 +249,11 @@ const ServiceCostumeDetail = () => {
                 }
               ]}
             >
-              <CustomUpload fileList={pictures} setFileList={handlePictures} />
+              <CustomUpload
+                fileList={pictures}
+                setFileList={handlePictures}
+                disabled={auth.role !== "ADMIN"}
+              />
             </Form.Item>
             <Form.Item
               name="model"
@@ -269,6 +273,7 @@ const ServiceCostumeDetail = () => {
                 textInfo="(Mô hình phải ở định dạng .glb)"
                 type="model"
                 modelPosition={[0, -10, 0]}
+                disabled={auth.role !== "ADMIN"}
               />
             </Form.Item>
           </Col>

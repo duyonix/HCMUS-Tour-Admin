@@ -23,7 +23,7 @@ export default class UserService extends BaseService {
   async updateProfile(data: any) {
     try {
       const res = await super.send(
-        "POST",
+        "PUT",
         `${PREFIX}/update-profile`,
         super.header(),
         data
@@ -37,8 +37,22 @@ export default class UserService extends BaseService {
   async updatePassword(data: any) {
     try {
       const res = await super.send(
-        "POST",
+        "PUT",
         `${PREFIX}/update-password`,
+        super.header(),
+        data
+      );
+      return res.data;
+    } catch (err: any) {
+      return super.errorResponse(err);
+    }
+  }
+
+  async updateRole(id: string, data: any) {
+    try {
+      const res = await super.send(
+        "PUT",
+        `${PREFIX}/${id}/update-role`,
         super.header(),
         data
       );

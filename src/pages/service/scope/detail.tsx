@@ -242,7 +242,11 @@ const ServiceScopeDetail = () => {
                 }
               ]}
             >
-              <CustomUpload fileList={logos} setFileList={handleLogos} />
+              <CustomUpload
+                fileList={logos}
+                setFileList={handleLogos}
+                disabled={auth.role !== "ADMIN"}
+              />
             </Form.Item>
 
             <div className="mt-4">

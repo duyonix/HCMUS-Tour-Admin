@@ -72,7 +72,7 @@ const BaseLayout = ({ children, routeConfig }: Props) => {
               onClick={showConfirm}
               className="text-with-icon flex-between color-primary"
             >
-              <span>Logout</span>
+              <span>Đăng xuất</span>
               <IconFont className="mr-0" type="log-out" size="1.571em" />
             </div>
           )

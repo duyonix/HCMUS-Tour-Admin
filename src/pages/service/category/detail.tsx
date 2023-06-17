@@ -171,6 +171,7 @@ const ServiceCategoryDetail = () => {
               <CustomUpload
                 fileList={backgrounds}
                 setFileList={handleBackgrounds}
+                disabled={auth.role !== "ADMIN"}
               />
             </Form.Item>
           </Col>

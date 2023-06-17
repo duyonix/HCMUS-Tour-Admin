@@ -1,12 +1,13 @@
 import React from "react";
 import { Button, Card, Col, Row, Spin, Table, Tag } from "antd";
-import { EyeOutlined } from "@ant-design/icons";
+import { EditOutlined } from "@ant-design/icons";
 import qs from "query-string";
 import UserService from "@/services/user";
 import useFetch from "@/hooks/useFetch";
 import { useHistory, useLocation } from "react-router-dom";
 import { changePage, cleanObject } from "@/utils";
 import Filter from "@/components/Filter";
+import { ROLE_OPTIONS } from "@/constants/variables";
 
 const UsersManagement = () => {
   const userService = new UserService();
@@ -59,7 +60,7 @@ const UsersManagement = () => {
         <Button
           onClick={() => onEdit(id)}
           type="primary"
-          icon={<EyeOutlined />}
+          icon={<EditOutlined />}
         ></Button>
       )
     }
@@ -67,6 +68,13 @@ const UsersManagement = () => {
   return (
     <>
       <Filter
+        filterSelects={[
+          {
+            label: "Phân quyền",
+            name: "role",
+            options: ROLE_OPTIONS
+          }
+        ]}
         isReset
         placeholder="Tìm kiếm theo email"
         isSearch

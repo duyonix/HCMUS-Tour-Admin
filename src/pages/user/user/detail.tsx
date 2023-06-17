@@ -1,11 +1,22 @@
-import { Col, Form, Row, Space, Button, Input, Card, Spin, Tabs } from "antd";
+import {
+  Col,
+  Form,
+  Row,
+  Space,
+  Button,
+  Input,
+  Card,
+  Spin,
+  Tabs,
+  Select
+} from "antd";
 import React, { useContext, useEffect, useState, useCallback } from "react";
 import { useParams, useHistory } from "react-router-dom";
 import { BreadcrumbContext } from "@/layouts/BaseLayout";
 import { goBackInDetailPage } from "@/utils";
 import { toast } from "react-toastify";
 import UserService from "@/services/user";
-import variables from "@/constants/variables";
+import variables, { ROLE_OPTIONS } from "@/constants/variables";
 import messages from "@/constants/messages";
 import ConfirmModal from "@/components/ConfirmModal";
 import CustomUpload from "@/components/CustomUpload";
@@ -16,6 +27,7 @@ const UserDetailManagement = () => {
   const [loading, setLoading] = useState(false);
   const [avatars, setAvatars] = useState<any[]>([]);
   const [models, setModels] = useState<any[]>([]);
+  const [role, setRole] = useState<string>("ADMIN");
   const breadcrumb = useContext(BreadcrumbContext);
   const [form] = Form.useForm();
 
@@ -23,11 +35,7 @@ const UserDetailManagement = () => {
   const history = useHistory();
 
   useEffect(() => {
-    if (id === "add") {
-      breadcrumb.addBreadcrumb("Thêm mới");
-    } else {
-      fetchDetail();
-    }
+    fetchDetail();
   }, [id]);
 
   const fetchDetail = async () => {
@@ -57,6 +65,7 @@ const UserDetailManagement = () => {
           }
         ]);
       }
+      setRole(res.payload.role);
       breadcrumb.addBreadcrumb(res.payload.name);
     } else {
       switch (res?.status) {
@@ -80,6 +89,20 @@ const UserDetailManagement = () => {
     });
   };
 
+  const onSaveRole = async () => {
+    setLoading(true);
+    const res = await userService.updateRole(id, {
+      role
+    });
+    setLoading(false);
+    if (res.status === variables.OK) {
+      toast.success(messages.EDIT_SUCCESS("phân quyền"));
+      setIsChange(false);
+    } else {
+      toast.error(messages.EDIT_FAILED("phân quyền"));
+    }
+  };
+
   const handleAvatars = useCallback(newAvatars => {
     setAvatars(newAvatars);
     setIsChange(true);
@@ -87,6 +110,11 @@ const UserDetailManagement = () => {
 
   const handleModels = useCallback(newModels => {
     setModels(newModels);
+    setIsChange(true);
+  }, []);
+
+  const handleChangeRole = useCallback(value => {
+    setRole(value);
     setIsChange(true);
   }, []);
 
@@ -98,25 +126,51 @@ const UserDetailManagement = () => {
         <Row gutter={[64, 16]} className="px-4">
           <Col span={12}>
             <Form.Item name="email" label="Email">
-              <Input />
+              <Input disabled />
             </Form.Item>
             <Form.Item name="fullName" label="Họ tên" className="mt-2">
-              <Input />
+              <Input disabled />
             </Form.Item>
             <Form.Item
               name="mobileNumber"
               label="Số điện thoại"
               className="mt-2"
             >
-              <Input />
+              <Input disabled />
             </Form.Item>
-            <Form.Item name="role" label="Phân quyền" className="mt-2">
-              <Input />
-            </Form.Item>
+
+            <Row
+              gutter={[16, 16]}
+              className="mt-2"
+              style={{ alignItems: "end" }}
+            >
+              <Col flex={1}>
+                <Form.Item name="role" label="Phân quyền">
+                  <Select
+                    options={ROLE_OPTIONS}
+                    className="w-100"
+                    onChange={handleChangeRole}
+                  />
+                </Form.Item>
+              </Col>
+              <Col>
+                <Button
+                  type="primary"
+                  onClick={onSaveRole}
+                  disabled={!isChange}
+                >
+                  Cập nhật
+                </Button>
+              </Col>
+            </Row>
           </Col>
           <Col span={12}>
             <Form.Item name="avatar" label="Avatar" className="mt-2">
-              <CustomUpload fileList={avatars} setFileList={handleAvatars} />
+              <CustomUpload
+                fileList={avatars}
+                setFileList={handleAvatars}
+                disabled
+              />
             </Form.Item>
 
             <Form.Item name="model" label="Mô hình" className="mt-2">
@@ -129,6 +183,7 @@ const UserDetailManagement = () => {
                 modelScale={4}
                 modelPosition={[0, -4, 0]}
                 modelHeight={450}
+                disabled
               />
             </Form.Item>
           </Col>
@@ -148,7 +203,6 @@ const UserDetailManagement = () => {
           }}
           className="d-flex fl-wrap fl-column fl-between"
           name="app"
-          disabled
         >
           <Tabs defaultActiveKey="1" className="tab-detail" items={itemsTab} />
         </Form>
