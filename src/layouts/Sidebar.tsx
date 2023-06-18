@@ -36,9 +36,8 @@ const Sidebar = ({ routeConfig }: Props) => {
     level: number = 0,
     prevKey: string = ""
   ) => {
-    const role = localStorage.getItem("user_role");
     const menu =
-      role !== "ADMIN"
+      auth.role !== "ADMIN"
         ? sidebar.filter((item: any) => item.role !== "ADMIN")
         : sidebar;
 

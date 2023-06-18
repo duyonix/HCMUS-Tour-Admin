@@ -7,6 +7,7 @@ interface State {
 interface AuthState {
   loading: boolean;
   isLogin: boolean;
+  firstLogin: boolean;
   token: string;
   user: any;
   message: string;

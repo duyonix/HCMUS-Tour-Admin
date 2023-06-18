@@ -8,7 +8,8 @@ import {
   Card,
   Spin,
   Tabs,
-  Typography
+  Typography,
+  Modal
 } from "antd";
 import React, { useEffect, useState, useCallback } from "react";
 import { toast } from "react-toastify";
@@ -19,11 +20,18 @@ import CustomUpload from "@/components/CustomUpload";
 import ChangePassword from "./ChangePassword";
 import ModelViewer from "@/components/ModelViewer";
 import ReadyPlayerMe from "@/components/ReadyPlayerMe";
+import { useAppDispatch, useAppSelector } from "@/hooks";
+import { authActions } from "@/pages/auth/auth.slice";
+import { useLocation } from "react-router-dom";
+import qs from "query-string";
+import { RootState } from "@/app/store";
 
 const { Text } = Typography;
 
 const UserProfile = () => {
   const userService = new UserService();
+  const auth = useAppSelector((state: RootState) => state.auth);
+  const dispatch = useAppDispatch();
   const [isChange, setIsChange] = useState(false);
   const [loading, setLoading] = useState(false);
   const [avatars, setAvatars] = useState<any[]>([]);
@@ -33,10 +41,33 @@ const UserProfile = () => {
   const [form] = Form.useForm();
 
   const id = localStorage.getItem("user_id") || "";
+  const location = useLocation();
+  const { firstLogin } = qs.parse(location.search);
+
+  useEffect(() => {
+    if (firstLogin === "true" && auth.firstLogin) {
+      infoFirstLogin();
+    }
+  }, [firstLogin, auth.firstLogin]);
 
   useEffect(() => {
     fetchDetail();
   }, [id]);
+
+  const infoFirstLogin = () => {
+    Modal.info({
+      title: "Chào mừng bạn đến với HCMUS Tour",
+      content: (
+        <Text>
+          Để tối ưu hóa trải nghiệm cá nhân của bạn, vui lòng tạo mô hình Avatar
+          3D của riêng bạn
+        </Text>
+      ),
+      onOk() {
+        setShowIFrame(true);
+      }
+    });
+  };
 
   const fetchDetail = async () => {
     setLoading(true);
@@ -83,6 +114,7 @@ const UserProfile = () => {
     if (res.status === variables.OK) {
       toast.success("Cập nhật thông tin cá nhân thành công!");
       setIsChange(false);
+      dispatch(authActions.getInfo(id));
     } else {
       toast.error("Cập nhật thông tin cá nhân thất bại!");
     }
@@ -262,7 +294,7 @@ const UserProfile = () => {
   return (
     <Spin size="large" style={{ position: "unset" }} spinning={loading}>
       <Card className="m-2 radius-lg mh-card-detail p-relative detail">
-        <Tabs defaultActiveKey="1" className="tab-detail" items={itemsTab} />
+        <Tabs defaultActiveKey="1" items={itemsTab} />
       </Card>
     </Spin>
   );

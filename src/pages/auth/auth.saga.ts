@@ -14,7 +14,6 @@ function* login(action: any) {
   if (res?.status === variables.OK) {
     localStorage.setItem("access_token", res.payload.token);
     localStorage.setItem("user_id", res.payload.user.id);
-    localStorage.setItem("user_role", res.payload.user.role);
     yield put(authActions.loginSuccess(res.payload));
 
     toast.success(messages.LOGIN_SUCCESS);

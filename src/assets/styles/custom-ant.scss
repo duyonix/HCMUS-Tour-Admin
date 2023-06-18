@@ -77,6 +77,16 @@
   color: rgba(0, 0, 0, 0.65);
 }
 
+.ant-menu-submenu-title .ant-menu-title-content,
+.ant-tabs-tab {
+  font-weight: 600;
+}
+
+.ant-upload-list-picture-card .ant-upload-list-item,
+.ant-upload.ant-upload-select-picture-card {
+  border-radius: 10px !important;
+}
+
 .preview-icon-only {
   border-radius: 5px;
 }
