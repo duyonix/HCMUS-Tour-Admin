@@ -134,11 +134,11 @@ const Register = () => {
                   rules={[
                     {
                       required: true,
-                      message: "Vui lòng nhập tên!"
+                      message: "Vui lòng nhập họ!"
                     }
                   ]}
                 >
-                  <Input placeholder="Tên" />
+                  <Input placeholder="Họ" />
                 </Form.Item>
               </Col>
               <Col md={12}>
@@ -148,11 +148,11 @@ const Register = () => {
                   rules={[
                     {
                       required: true,
-                      message: "Vui lòng nhập họ!"
+                      message: "Vui lòng nhập tên!"
                     }
                   ]}
                 >
-                  <Input placeholder="Họ" />
+                  <Input placeholder="Tên" />
                 </Form.Item>
               </Col>
             </Row>
